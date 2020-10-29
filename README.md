@@ -13,6 +13,7 @@ To supress output and put it into a file, the script can be run as \
 
 To Do List:
 - Get the Spin-Spin Correlation function plotting (I believe my function is correct)
+- Jackknife errors 
 - Remove the python dependency by invoking Bash (or better yet, make the temperature loop inside the code)
 - Automate `gnuplot` plotting (invoke it in the code, removes extra comman line entry)
 - Clean up the Git repo and my own directories
