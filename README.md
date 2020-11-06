@@ -12,8 +12,8 @@ To supress output and put it into a file, the script can be run as \
 `graphs.dat` is then used by `gnuplot` to plot the graphs.
 
 To Do List:
-- Spin-Spin Correlation function for various lattice sizes (20x20 done), temperatures, 
-- Jackknife errors 
+- Spin-Spin Correlation functions (both G(r) and G(t)) for various lattice sizes (20x20 done) and temperatures
+- Jackknife errors (Currently using Binder & Heerman and converting example `R` code to `C`)
 - Merge the changes to allocating memory made in `sscor.c`to `ising.c`
 - Clean up code (making headers for the spin models)
 - Remove the python dependency by invoking Bash (or better yet, make the temperature loop inside the code)
