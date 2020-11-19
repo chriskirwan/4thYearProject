@@ -1,1 +1,0 @@
-set output png
