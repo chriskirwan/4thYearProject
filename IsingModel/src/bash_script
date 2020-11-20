@@ -20,7 +20,7 @@ done
 
 for i in {2..5}
 do
-rm -r output_new_$i.dat
+rm -r outputnew_$i.dat
 done 
 
 exit 0
