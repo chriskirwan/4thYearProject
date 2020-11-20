@@ -1,0 +1,26 @@
+#! /bin/bash
+
+for i in {1..5}
+do 
+./plot_name > output_$i.dat
+done 
+
+for i in {2..5}
+do
+	cut -d " " -f2 output_$i.dat > outputnew_$i.dat
+done
+paste -d " " output_1.dat outputnew_{2..5}.dat > plot_name.dat
+./awk_script plot_name.dat > error.dat
+paste -d " " plot_name.dat error.dat > plot_name_full_dataset.dat
+
+for i in {1..5}
+do 
+rm -r ouput_$i.dat
+done
+
+for i in {2..5}
+do
+rm -r output_new_$i.dat
+done 
+
+exit 0
