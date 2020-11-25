@@ -1,0 +1,6 @@
+random_spin_generator() {
+  F[i][j] = random_number(-pi,pi)
+ }
+ 
+ hamiltonian() {
+ }
