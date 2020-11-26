@@ -2,5 +2,15 @@ random_spin_generator() {
   F[i][j] = random_number(-pi,pi)
  }
  
- hamiltonian() {
+  energy_ij(F[i][j]) { 
+    E_1 = -( cos(F[i][j] - F[i+1][j]
+            +cos(F[i][j] - F[i-1][j]
+            +cos(F[i][j] - F[i][j+1]
+            +cos(F[i][j] - F[i][j-1])
+  }
+  
+  delta_energy() {
+    delta_theta = random_number(-delta,delta)
+    G[i][j] = F[i][j] + delta_theta
+    new_energy = energy_ij(G[i][j]); 
  }
