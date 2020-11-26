@@ -13,4 +13,18 @@ random_spin_generator() {
     delta_theta = random_number(-delta,delta)
     G[i][j] = F[i][j] + delta_theta
     new_energy = energy_ij(G[i][j]); 
+    delta_energy = energy_ij(G[i][j]) - energy_ij(F[i][j]) 
+    In delta_energy I can probably invoke a trig identity
+    \Delta E_{\langle i,j \rangle} = \cos(\theta_i + \delta\theta - \theta_j) - \cos(\theta_i - \theta_j) = 2\sin(\delta\theta)\sin(\theta_i + \delta\theta/2 - \theta_j)
+    
  }
+
+metropolis_algorithm() {
+random_lattice_point; 
+if delta_energy < 0
+    F[i][j] = G[i][j]
+if delta_energy > 0;
+    uniformly_random_number > exp(delta_energy/T)
+    F[i][j] = G[i][j]
+}    
+    
