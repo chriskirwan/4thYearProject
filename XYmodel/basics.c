@@ -19,7 +19,7 @@
 //}
 
 int main(int argc, char*argv[]) {
-	int L = 100;
+	int L = 10;
 	double T = 0.1; 
 	int i,j;
 	int N = L*L;
@@ -43,7 +43,7 @@ int main(int argc, char*argv[]) {
 	fclose(fp);
 
 
-	int monte_carlo_steps = 1000000; 
+	int monte_carlo_steps = 1; 
 	int sample_frequency = 100; 
 
 	for(i=0;i<monte_carlo_steps;i++) {

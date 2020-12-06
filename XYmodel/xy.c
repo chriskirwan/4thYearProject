@@ -20,7 +20,7 @@ void cold_lattice(int L, double F[][L]) {
 
 	for(i=0;i<L;i++) {
 		for(j=0;j<L;j++) {
-			F[i][j] = 1; 
+			F[i][j] = 0; 
 		}
 	}
 }
@@ -54,7 +54,11 @@ void metropolis_step(int L, gsl_rng*r, double T, double F[][L]) {
 	double b = exp(de*(1.0)/T); 
 	double x = gsl_rng_uniform(r); 
 
-	if (x<b) { 
+	if (b < 0) {
 		F[i][j] = rnd;
+	} else { 
+		if (x<b) { 
+			F[i][j] = rnd;
+		}	
 	}
 }
