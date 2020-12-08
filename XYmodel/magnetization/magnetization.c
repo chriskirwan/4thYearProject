@@ -19,12 +19,12 @@ double magnetization_squared(int L, double F[][L]) {
 		}
 	}		
 	double avg = (sum1*sum1 + sum2*sum2)/(L*L); 
-	return avg/(N*N); 
+	return avg; 
 }
 
 int main(int argc, char*argv[]) {
-	int L = 40;
-	double T = 0.3; 
+	int L = 30;
+	double T; 
 	int i,j;
 	int N = L*L;
 
@@ -34,17 +34,25 @@ int main(int argc, char*argv[]) {
 	unsigned long int seed = (unsigned)time(NULL); 
 	gsl_rng_set(r, seed); 	
 
-	random_lattice(L,r,F);
 	
-	int monte_carlo_steps = 1000000; 
-	int sample_frequency = 1000; 
+	int monte_carlo_steps = 100000; 
+	int sample_frequency = 100; 
 
-	for(i=0;i<monte_carlo_steps;i++) {	
-		for(j=0;j<L;j++) {
-			metropolis_step(L,r,T,F); 
+	for(T=0.2;T<1.4;T+=0.01) {
+		cold_lattice(L,F); 
+		double mag_sum = 0.0; 
+		int ns = 0; 
+
+		for(i=0;i<monte_carlo_steps;i++) {	
+			for(j=0;j<L;j++) {
+				metropolis_step(L,r,T,F); 
+			}
+			if(!(i%sample_frequency)) {
+				mag_sum += magnetization_squared(L,F);
+			   	ns++;	
+			}
 		}
-
-
+		printf("%f %f\n", T, mag_sum/ns);
 	}
 
 free(F); 
