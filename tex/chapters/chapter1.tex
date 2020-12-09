@@ -83,23 +83,27 @@
 		and $\mathcal{H}_{\Lambda}$ be the Hamiltonian of an $\ON{n}$-symmetric model, over a lattice 
 		$\Lambda$. We thus have
 		\begin{equation}
-			\mathcal{H}_{\Lambda} = \sum_{\inprod{i}{j}} U\rpth{\inprod{\vectr{\sigma}_i}
+			\mathcal{H}_{\Lambda} = \sum_{\inprod{i}{j} \in E(G)} U\rpth{\inprod{\vectr{\sigma}_i}
 			{\vectr{\sigma}_j}}
 		\end{equation}
 
-		In particular, if we have $f(x) = -x$, we then have the definiton of the Hamiltonian for 
+		In particular, if we have $U(x) = -Jx$, we then have the definiton of the Hamiltonian for 
 		the $\ON{n}$ (or $n$-vector) model
 		\begin{equation}
-		H_{\Lambda} = - \sum_{\inprod{i}{j}} \inprod{\vectr{\sigma}_i}{\vectr{\sigma}_j}
+			H_{\Lambda} = - \sum_{\inprod{i}{j} \in E(G)} J_{ij}\inprod{\vectr{\sigma}_i}
+			{\vectr{\sigma}_j}
 		\end{equation}
+		With $J = J_{ij} = J(i-j)$ being the \textit{translation invariant interaction strength} between
+		each spin on the lattice. 
 	\end{ndefi}
 
 	We can now plug in different values of $n$ to get different models 
 	\begin{itemize}
-		\item $n=1$ gives the \textit{Ising Model}, with spins taking values in $\clpth{\pm1}$. The 
-			discussion on this model is given below
-		\item $n=2$, the spins lie along the circle with radius $1$ (hence $\ON{2}$ symmetric). This
-			is called the \textit{XY Model} and is also central to the discussion. 
+		\item $n=1$ gives the \textit{Ising Model}, with spins taking values in $\Omega_0 = \clpth{-1,1}$.
+			The discussion on this model is given below
+		\item $n=2$, the spins lie along the circle with radius $1$ ie, $\Omega_0 = \clpth{x \in \R^2, 
+			\norm{x}_2 = 1}$ (hence $\ON{2}$ symmetric). This is called the \textit{XY Model} and is 
+			also central to the discussion. 
 		\item $n=3, n \rightarrow \infty$ are called the \textit{Heisenberg Model} and 
 			\textit{Berlin–Kac Spherical Model}. $n=4$ can be used as a "toy" model of the Higgs Sector.
 	\end{itemize}
@@ -116,6 +120,59 @@
 			Z = \int_{\Omega_{\Lambda}} \exp\rpth{\beta H(\sigma_i, \sigma_j)} \mathrm{d}\sigma
 		\end{equation}
 	\end{ndefi}
+
+	(Discussion on finite and infinte Gibbs measures/DLR formalism here??)
+
+	Usually, we restrict ourselves to a $d$-dimensional finite lattice, usually imposing what is called
+	\textit{boundary conditions} $\eta$  on the lattice. This discussion is mainly oriented 
+	around the torus $\T^d_L$ with side length $L$, which is the set of vertices of $G$ given by
+	\[ V(\T^d_L) = \clpth{0,1,\cdots,L}^d. \]
+	The edges are then defined with pairs of vertices $(i,j)$ with $i=(i_1,\cdots, d)$ such that 
+	$\sum_{r=1}^{d} \rpth{ (i_r - j_r) \mod L } = 1$. This boundary condition is said to be 
+	\textit{periodic}. The configurations are then given 
+	on $\Omega_{\Lambda} = \Omega_0^{\eta} = \Omega_0^{\T^d_L}$. 
+
+	From the definition ??, we note that the $\ON{n}$ model with $\beta \in [0,\infty)$ is called 
+	\textit{ferromagnetic}. If $U(x)$ is instead $x$, we call this \textit{antiferromagnetic}. Note,
+	however, that on biparte graphs, these relations are isomorphic through the map $f:\sigma_v 
+	\rightarrow -\sigma_v$. These definitions are actually quite different on non-biparte graphs (such as
+	a triagonal lattice).
+
+	The above definitions of the $\ON{n}$ spin models do admit some further generalizations. We can, for 
+	instance, take a vector $x \in \R^n$ and add a second term $\sum_{i \in \Lambda} 
+	\inprod{\sigma_i}{x}$ to the Hamiltonian defined in ??. This applys  what we call an \textit{external 
+	magnetic field} to the density in ??. We can also replace the \textit{single site distribution} by
+	modifying the measure $\mathrm{d} \sigma$ in ?? with another product measure on $G$. We can also 
+	make the Hamiltonian \textit{anisotropic} by addding extra terms to the innner product used in
+	the definition of the $\ON{n}$ model. 
+
+	\section{The Ising Model}
+	Using the definition of the $\ON{n}$ spin moder as above, we now set $n=1$. Thus, the spin 
+	configuration takes values in $\pm 1$. Imposing the \textit{periodic boundary conditions} as oulined 
+	in the previous section, we then get the Ising Model in $d$ dimensions. We define the Hamiltonian and
+	the Gibbs Measure/Distribution as:
+	\begin{ndefi}
+		The Gibbs Distribution of the Ising Model on $\Lambda$ with $\eta$ as the boundary condition is
+		the probability distribution over $\Omega_\Lambda^\eta$
+		\[ \mathrm{d}\mu^{\eta} = \frac{1}{Z^{\eta}} \exp \rpth{\beta H(\sigma)} 
+			\mathrm{d}\sigma \]
+		With the partition function 
+		\[ Z^\eta = \sum_{\sigma \in \Omega_\Lambda^\eta} \exp \rpth{H(\sigma)} \]
+		Where we've replaced the integral with a summation as the single spin configuration
+		is a discrete value. We've indexed with $\eta$ to denote boundary conditions are enforced. 
+		The Hamiltonian $H$ (without an external magnetic field) is then 
+		\[H = -\sum_{\inprod{i}{j}} J_{ij} \sigma_i \sigma_j  \]
+	\end{ndefi}
+
+	We simplify the discussion further by allowing $J_{(ij)} = 1$ for all $(i,j) \in \Lambda$. Using
+	this, we then define the \textit{magnetization} to be a measurement of the whole system 
+		\begin{equation}
+			M = \sum_{i=1}^N \sigma_i \Rightarrow \langle M \rangle = \frac{1}{N} M
+		\end{equation}
+	with $N$ being the total number of spins in the lattice ($L^{d}$). 
+
+	\subsection{Autocorrelations}
+
 
 
 
