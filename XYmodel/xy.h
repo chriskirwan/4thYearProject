@@ -1,11 +1,13 @@
-#ifndef XY_H 
+#ifndef XY_H
 
 #define XY_H
 
-void random_lattice(int L, gsl_rng*r, double F[][L]);
-void cold_lattice(int L, double F[][L]); 
-double random_flip(double a, gsl_rng*r); 
-double flip_energy(int L, int i, int j, gsl_rng*r, double F[][L]); 
-void metropolis_step(int L, gsl_rng*r, double T, double F[][L]); 
-
-#endif 
+void RandomLattice(int L, gsl_rng*r, double F[][L]);
+void ColdLattice(int L, double F[][L]);
+double RandomSpin(gsl_rng*r);
+double Energy(int L, int i, int j, double F[][L]);
+double EnergyFlip(int L, int i, int j, double NewSpin, double F[][L]);
+void MetropolisStep(int L, gsl_rng*r, double T, double F[][L]);
+double Magnetization(int L, double F[][L]);
+double EnergyFunc(int L, double F[][L]); 
+#endif
