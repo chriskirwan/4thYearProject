@@ -5,12 +5,29 @@
 #include <gsl/gsl_rng.h>
 #include "../xy.h"
 
+void MagnetizationSquaredPerSpin(int L, double *total, double F[][L]) { 
+	int i,j; 
+	double sum1 = 0.0; 
+	double sum2 = 0.0; 
+	int N = L*L;
+
+	for(i=0;i<L;i++) {
+		for(j=0;j<L;j++) {
+			sum1 += cos(F[i][j]);
+		   	sum2 += sin(F[i][j]); 
+		}
+	}	
+	*total = (sum1*sum1 + sum2*sum2);
+	*total /= N*N; 
+}
+
 int main(int argc, char*argv[]) {
 	int L = 20;
 	int N = L*L; 	
 	int i,j; 
-	int MonteCarloSteps = 50000;
-	int SampleFrequency = 100; 
+	int thermalization = 5000; 
+	int monte_carlo_steps = 50000;
+	int sample_frequency = 100; 
 
 	double T; 
 
@@ -23,19 +40,27 @@ int main(int argc, char*argv[]) {
 
 	for(T=0.1;T<2;T+=0.05) {
 		ColdLattice(L,F); 
-		double MagSum = 0.0; 
-		int NumberSamples = 0;
+		double mag_sum = 0.0; 
+		double mag_sqrd_sum = 0.0; 
+		int number_samples = 0;
 
-		for(i=0;i<MonteCarloSteps;i++) {
+		for(i=0;i<thermalization;i++) {
 			for(j=0;j<N;j++) { 
 				MetropolisStep(L,r,T,F); 
 			}
-			if(!(i%SampleFrequency)) {
-				MagSum += Magnetization(L,F); 
-				NumberSamples++; 
+		}
+		
+		for(i=0;i<monte_carlo_steps;i++) {
+			for(j=0;j<N;j++) { 
+				MetropolisStep(L,r,T,F); 
+			}
+			if(!(i%sample_frequency)) {
+				MagnetizationSquaredPerSpin(L,&mag_sum, F); 
+				mag_sqrd_sum += mag_sum; 
+				number_samples++; 
 			}
 		}
-		printf("%lf %lf\n", T, MagSum/(double)NumberSamples); 
+		printf("%lf %lf\n", T, mag_sqrd_sum/number_samples); 
 	}
 free(F); 
 }
