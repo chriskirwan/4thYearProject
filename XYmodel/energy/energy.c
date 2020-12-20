@@ -5,12 +5,27 @@
 #include <gsl/gsl_rng.h>
 #include "../xy.h"
 
+void EnergyPerSpin(int L, double *energy, double F[][L]) {
+	int i,j;
+	int N = L*L; 
+
+	*energy = 0.0; 
+	for(i=0;i<L;i++) {
+		for(j=0;j<L;j++) {
+			*energy -=0.5*Energy(L,i,j,F); 
+		}
+	}
+	*energy /= N;
+}
+
+
 int main(int argc, char*argv[]) {
 	int L = 20;
 	int N = L*L; 	
 	int i,j; 
-	int MonteCarloSteps = 10000;
-	int SampleFrequency = 100; 
+	int thermalization = 5000;
+	int monte_carlo_steps = 50000;
+	int sample_frequency = 100; 
 
 	double T; 
 
@@ -22,20 +37,22 @@ int main(int argc, char*argv[]) {
 
 
 	for(T=0.1;T<2.1;T+=0.1) {
-		ColdLattice(L,F); 
-		double EnergySum = 0.0; 
-		int NumberSamples = 0;
+		ColdLattice(L,F);
+	   	double energy = 0.0; 	
+		double energy_sum = 0.0; 
+		int number_samples = 0;
 
-		for(i=0;i<MonteCarloSteps;i++) {
+		for(i=0;i<monte_carlo_steps;i++) {
 			for(j=0;j<N;j++) { 
 				MetropolisStep(L,r,T,F); 
 			}
-			if(!(i%SampleFrequency)) {
-				EnergySum += EnergyFunc(L,F); 
-				NumberSamples++; 
+			if(!(i%sample_frequency)) {
+				EnergyPerSpin(L,&energy,F);
+			   	energy_sum += energy; 	
+				number_samples++; 
 			}
 		}
-		printf("%lf %lf\n", T, EnergySum/(double)NumberSamples); 
+		printf("%lf %lf\n", T, energy_sum/number_samples); 
 	}
-free(F); 
+free(F);
 }
